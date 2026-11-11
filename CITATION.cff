@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this code or the LAcc/RPI constructs, please cite the KSEM 2026 paper."
+authors:
+  - family-names: Li
+    given-names: Yinghe
+title: "Kinematics-Inspired Behavioral Dynamics and Risk-Constrained Ensemble Learning for Student Performance Prediction in Blended Environments"
+type: software
+year: 2026
+conference:
+  name: International Conference on Knowledge Science, Engineering and Management (KSEM)
+  year: 2026
+repository-code: "https://github.com/lyh112358/ksem2026-kinematic-risk-ensemble"
+url: "https://github.com/lyh112358/ksem2026-kinematic-risk-ensemble"
+license: MIT
