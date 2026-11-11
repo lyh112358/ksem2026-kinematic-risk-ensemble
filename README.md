@@ -42,15 +42,26 @@ A robust fusion of gradient boosting (XGBoost, LightGBM), randomized trees (Extr
 
 ## Repository Structure
 ```text
-Risk-Constrained-Behavioral-Dynamics/
-├── data_preprocessing.py          # Penalty-based imputation and temporal feature engineering
-├── blending_optimization.py       # Optuna-based Bayesian hyperparameter tuning with Recall constraints
-├── dual_fusion_optimization.py    # Stacking heterogeneous base models & meta-learner calibration
-├── lstm_baseline.py               # Cost-sensitive LSTM sequence modeling baseline
-├── shap_analysis.py               # Global interpretability and feature importance analysis
+ksem2026-kinematic-risk-ensemble/
+├── base_model_optimization.py     # Base learners + recall-constrained Bayesian HPO (Optuna TPE) + SHAP feature selection
+├── risk_constrained_stacking.py   # Dual-layer heterogeneous fusion (stacking / soft voting) with TMT features (LE/LS/LAcc/RPI)
+├── lstm_focal_loss_baseline.py    # Cost-sensitive LSTM baseline with focal loss
+├── tmt_feature_analysis.py        # SHAP-based interpretability toolkit
 ├── requirements.txt
 └── README.md
 ```
+
+All four entry scripts expose a `__main__` block and can be run directly; dataset paths and cohort settings are defined at the top of each script.
+
+---
+
+## Data
+
+The institutional MOOC tables and offline scores are de-identified. Row keys are one-way hashes; the release contains no names, student numbers, class, or college.
+
+- Public release of the tables actually read: https://github.com/lyh112358/used-datasets (`ml-early-warning/private`, `ml-early-warning/oulad`)
+- The OULAD portion follows the public student keys of Kuzilek, Hlosta, and Zdrahal (*Scientific Data*, 2017, CC BY 4.0).
+- Raw institutional files are not redistributed in this repository.
 
 ---
 
@@ -72,24 +83,24 @@ Supported by SHAP analysis, early dynamic indicators (RPI & LAcc) exhibit signif
 
 ### 1. Setup Environment
 ```bash
-git clone https://github.com/lyh112358/Risk-Constrained-Behavioral-Dynamics.git
-cd Risk-Constrained-Behavioral-Dynamics
+git clone https://github.com/lyh112358/ksem2026-kinematic-risk-ensemble.git
+cd ksem2026-kinematic-risk-ensemble
 pip install -r requirements.txt
 ```
 
 ### 2. Execute Pipeline
 ```bash
-# Step 1: Feature Extraction & Data Governance
-python data_preprocessing.py
+# Step 1: base learners with recall-constrained Bayesian HPO
+python base_model_optimization.py
 
-# Step 2: Constrained Optimization for Base Models
-python blending_optimization.py
+# Step 2: dual-layer heterogeneous fusion
+python risk_constrained_stacking.py
 
-# Step 3: Heterogeneous Stacking Ensemble Evaluation
-python dual_fusion_optimization.py
+# Step 3: LSTM + focal-loss baseline
+python lstm_focal_loss_baseline.py
 
-# Step 4: Interpretability (Generates SHAP Summary Plots)
-python shap_analysis.py
+# Step 4: SHAP interpretability
+python tmt_feature_analysis.py
 ```
 
 ---
